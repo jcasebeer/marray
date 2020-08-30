@@ -28,17 +28,24 @@ struct mhead {
 
 void *_mgrow(void *a, int n, int size)
 {
-    int cap = a == 0 || _mcap(a) == 0 ? n : _mcap(a)*2;
-    struct mhead *r = realloc(a == 0 ? 0 : _mhead(a), cap*size + sizeof(struct mhead));
+    int    len = 0;
+    int    cap = n;
+    void *head = 0;
+    if (a) {
+        head = _mhead(a);
+        cap  = _mcap(a) ? _mcap(a)*2 : n;
+        len  = _mlen(a);
+    } 
+    struct mhead *r = realloc(head, cap*size + sizeof(struct mhead));
     if (r) {
-        if (!a)
-            r->len = 0;
+        r->len = len;
         r->cap = cap;
-        return r + 1;
+        return r+1;
     } else {
         perror("mpush");
         exit(1);
         return NULL;
+
     }
 }
 
