@@ -45,7 +45,6 @@ void *_mgrow(void *a, int n, int size)
         perror("mpush");
         exit(1);
         return NULL;
-
     }
 }
 
