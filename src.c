@@ -3,19 +3,24 @@
 
 #include "marray.h"
 
+void build_list(int **array)
+{
+    mpush(*array, 1);
+    mpush(*array, 2);
+    mpush(*array, 3);
+    mpush(*array, 4);
+    mpush(*array, 5);
+    mpush(*array, 6);
+    mpush(*array, 7);
+    mpush(*array, 8);
+}
+
 int main(int argc, char **argv)
 {
     
     int *array = NULL;
-
-    mpush(array, 1);
-    mpush(array, 2);
-    mpush(array, 3);
-    mpush(array, 4);
-    mpush(array, 5);
-    mpush(array, 6);
-    mpush(array, 7);
-    mpush(array, 8);
+    build_list(&array);
+    
     int top = mcount(array);
 
     while(top > 0) {
