@@ -17,7 +17,7 @@ struct mhead {
     int cap;
 };
 
-#define _mhead(a) ( (struct mhead *)  a - 1 )
+#define _mhead(a) ( (struct mhead *)  (a) - 1 )
 #define _mlen(a) ( _mhead(a)->len )
 #define _mcap(a) ( _mhead(a)->cap )
 #define __mgrow(a) ( (a) == 0 || _mlen(a)+1 > _mcap(a) ? (a) = _mgrow((a), 1, sizeof(*(a))) : 0 )
