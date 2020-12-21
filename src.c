@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "marray.h"
 
@@ -26,6 +27,11 @@ int main(int argc, char **argv)
     while(top > 0) {
         printf("%d \n", array[--top]);
     }
+
+    int *array_copy = mcopy(array);
+    assert(mcount(array_copy) == mcount(array));
+    for(int i = 0; i<mcount(array_copy); i++)
+        assert(array_copy[i] == array_copy[i]);
 
     mfree(array); 
 

@@ -10,6 +10,7 @@
 */
 
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 
 struct mhead {
@@ -25,6 +26,7 @@ struct mhead {
 #define mpush(a, ...) ( __mgrow(a), (a)[_mlen(a)++] = (__VA_ARGS__) )
 #define mfree(a) ( (a) ? free(_mhead(a)), (a)=0 : 0 )
 #define mcount(a) ( (a) ? _mlen(a) : 0 )
+#define mcopy(a) ( (a) ? _mcopy(a, sizeof(*(a))) : NULL )
 
 void *_mgrow(void *a, int n, int size)
 {
@@ -48,4 +50,15 @@ void *_mgrow(void *a, int n, int size)
     }
 }
 
+void *_mcopy(void *a, int size)
+{
+    void *head = _mhead(a);
+    int cap  = _mcap(a);
+    size_t bytes = cap*size + sizeof(struct mhead);
+    struct mhead *r = malloc(bytes);
+    memcpy(r, head, bytes);
+    return r+1;
+}
+
 #endif
+
