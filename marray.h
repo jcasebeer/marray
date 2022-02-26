@@ -10,7 +10,6 @@
 */
 
 #include <stdlib.h>
-#include <string.h>
 #include <errno.h>
 
 struct mhead {
@@ -25,8 +24,10 @@ struct mhead {
 
 #define mpush(a, ...) ( __mgrow(a), (a)[_mlen(a)++] = (__VA_ARGS__) )
 #define mfree(a) ( (a) ? free(_mhead(a)), (a)=0 : 0 )
+#define mpop(a) (a && _mlen(a) ? (_mlen(a)--, (a)[_mlen(a)]) : 0)
 #define mcount(a) ( (a) ? _mlen(a) : 0 )
 #define mcopy(a) ( (a) ? _mcopy(a, sizeof(*(a))) : NULL )
+#define msort(a, compare) ((a) ? (void)qsort(a, mcount(a), sizeof(*(a)), compare) : (void)0)
 
 void *_mgrow(void *a, int n, int size)
 {
